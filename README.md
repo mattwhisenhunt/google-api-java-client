@@ -8,10 +8,15 @@ These client libraries are officially supported by Google.  However, the librari
 
 For Google Cloud Platform APIs such as Datastore, Cloud Storage or Pub/Sub and many others, we recommend using [Cloud Client Libraries for Java](https://github.com/GoogleCloudPlatform/google-cloud-java) which is under active development.
 
+## <a name='Getting_Started'>Getting Started<a/>
+
 <details><summary>Contents</summary>
 <p>
 
 - [Getting Started](#Getting_Started)
+  - [Accessing Google APIs](#Accessing_Google_APIs)
+  - [Developing for Android](#Developing_for_Android)
+  - [Other Java environments](#Other_Java_environments)
 - [Highlighted Features](#Highlighted_Features)
 - [Dependencies](#Dependencies)
 - [Important Warnings](#Beta)
@@ -22,8 +27,7 @@ For Google Cloud Platform APIs such as Datastore, Cloud Storage or Pub/Sub and m
 </p>
 </details>
 
-## <a name='Getting_Started'>Getting Started<a/> ##
-### Accessing Google APIs
+### <a name='Accessing_Google_APIs'>Accessing Google APIs<a/>
 
 To use Google's Java client libraries to call any Google API, you need two libraries:
 
@@ -36,12 +40,14 @@ If you are using the old GData library, you need to
 [migrate](https://github.com/google/gdata-java-client/blob/wiki/MigratingToGoogleApiJavaClient.md).
 
 ### Developing for Android
+### <a name='Developing_for_Android'>Developing for Android<a/>
+
 
 If you are developing for Android and the Google API you want to use is included in the [Google Play Services library](https://developer.android.com/google/play-services/index.html), you should use that library for the best performance and experience. 
 
 To access other Google APIs, you can use the Google APIs Client Library for Java, which supports [Android 1.5 (or higher)](https://developers.google.com/api-client-library/java/google-api-java-client/android).
 
-### Other Java environments
+### <a name='Other_Java_environments'>Other Java environments<a/>
 
 In addition to Android 1.7 or higher, the Google APIs Client Library for Java supports the following Java environments:
   - Java 7 (or higher), standard (SE) and enterprise (EE)
