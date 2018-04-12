@@ -1,7 +1,17 @@
 # Google APIs Client Library for Java
 
-- [Library maintenance](#maintenance)
-- [Overview](#Overview)
+The Google APIs Client Library for Java is a flexible, efficient, and powerful Java client library for accessing any HTTP-based API on the web, not just Google APIs. 
+
+These client libraries are officially supported by Google.  However, the libraries are considered complete and are in maintenance mode. This means that we will address critical bugs and security issues but will not add any new features.
+
+## Google Cloud Platform
+
+For Google Cloud Platform APIs such as Datastore, Cloud Storage or Pub/Sub and many others, we recommend using [Cloud Client Libraries for Java](https://github.com/GoogleCloudPlatform/google-cloud-java) which is under active development.
+
+<details><summary>Contents</summary>
+<p>
+
+- [Getting Started](#Getting_Started)
 - [Highlighted Features](#Highlighted_Features)
 - [Dependencies](#Dependencies)
 - [Important Warnings](#Beta)
@@ -9,23 +19,10 @@
   - [Deprecations](#Deprecations)
 - [Documentation](#Documentation)
 - [Links](#Links)
+</p>
+</details>
 
-## <a name='maintenance'>Library maintenance</a>
-
-This client library is supported but in maintenance mode only. We are fixing necessary bugs and adding essential features to ensure this library continues to meet your needs for accessing Google APIs. Non-critical issues will be closed. Any issue may be reopened if it is causing ongoing problems.
-
-If you're working with **Google Cloud Platform** APIs such as Datastore, Pub/Sub and many others, consider using the [Cloud Client Libraries for Java](https://github.com/GoogleCloudPlatform/google-cloud-java) instead. These are the new and idiomatic Java libraries targeted specifically at Google Cloud Platform Services.
-
-## <a name='Overview'>Overview<a/>
-
-The Google APIs Client Library for Java is a flexible, efficient, and powerful Java client library for accessing any HTTP-based API on the web, not just Google APIs. 
-
-The library has the following features:
- - A powerful [OAuth 2.0](https://developers.google.com/api-client-library/java/google-api-java-client/oauth2) library with a consistent interface.  
- - Lightweight, efficient XML and JSON data models that support any data schema.
- - Support for [protocol buffers](https://github.com/google/protobuf/).
- - A set of [generated libraries for Google APIs](https://developers.google.com/api-client-library/java/apis/). 
-
+## <a name='Getting_Started'>Getting Started<a/> ##
 ### Accessing Google APIs
 
 To use Google's Java client libraries to call any Google API, you need two libraries:
@@ -46,113 +43,117 @@ To access other Google APIs, you can use the Google APIs Client Library for Java
 
 ### Other Java environments
 
-In addition to Android 1.5 or higher, the Google APIs Client Library for Java supports the following Java environments:
-  - Java 5 (or higher), standard (SE) and enterprise (EE)
+In addition to Android 1.7 or higher, the Google APIs Client Library for Java supports the following Java environments:
+  - Java 7 (or higher), standard (SE) and enterprise (EE)
   - [Google App Engine](https://developers.google.com/api-client-library/java/google-api-java-client/app-engine)
 
 Not supported: Google Web Toolkit (GWT), Java mobile (ME), and Java 1.4 (or earlier).
 
 ## <a name='Highlighted_Features'>Highlighted Features<a/>
+- **A powerful [OAuth 2.0](https://developers.google.com/api-client-library/java/google-api-java-client/oauth2) library with a consistent interface.**
+- **Lightweight, efficient XML and JSON data models that support any data schema.**
+- **Support for [protocol buffers](https://github.com/google/protobuf/).**
+- **A set of [generated libraries for Google APIs](https://developers.google.com/api-client-library/java/apis/).**
 - **The library makes it simple to call Google APIs.**
 
- You can call Google APIs using Google service-specific generated libraries with the Google APIs Client Library for Java. Here's an example that makes a call to the [Google Calendar API](https://developers.google.com/google-apps/calendar/): 
-
-  ```java
-  // Show events on user's calendar.
-  View.header("Show Calendars");
-  CalendarList feed = client.calendarList().list().execute();
-  View.display(feed); 
-  ```
+    You can call Google APIs using Google service-specific generated libraries with the Google APIs Client Library for Java. Here's an example that makes a call to the [Google Calendar API](https://developers.google.com/google-apps/calendar/): 
+    
+    ```java
+    // Show events on user's calendar.
+    View.header("Show Calendars");
+    CalendarList feed = client.calendarList().list().execute();
+    View.display(feed); 
+    ```
 
 - **The library makes authentication easier.**
+    
+    The authentication library can reduce the amount of code needed to handle [OAuth 2.0](https://developers.google.com/api-client-library/java/google-api-java-client/oauth2), and sometimes a few lines is all you need. For example:
 
- The authentication library can reduce the amount of code needed to handle [OAuth 2.0](https://developers.google.com/api-client-library/java/google-api-java-client/oauth2), and sometimes a few lines is all you need. For example:
-
-  ```java
-  /** Authorizes the installed application to access user's protected data. */
-  private static Credential authorize() throws Exception {
-    // load client secrets
-    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-        new InputStreamReader(CalendarSample.class.getResourceAsStream("/client_secrets.json")));
-    // set up authorization code flow
-    GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-        httpTransport, JSON_FACTORY, clientSecrets,
-        Collections.singleton(CalendarScopes.CALENDAR)).setDataStoreFactory(dataStoreFactory)
-        .build();
-    // authorize
-    return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
-  } 
-  ```
+    ```java
+    /** Authorizes the installed application to access user's protected data. */
+    private static Credential authorize() throws Exception {
+      // load client secrets
+      GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+          new InputStreamReader(CalendarSample.class.getResourceAsStream("/client_secrets.json")));
+      // set up authorization code flow
+      GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+          httpTransport, JSON_FACTORY, clientSecrets,
+          Collections.singleton(CalendarScopes.CALENDAR)).setDataStoreFactory(dataStoreFactory)
+          .build();
+      // authorize
+      return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+    } 
+    ```
 - **The library makes batching and media upload/download easier.**
 
- The library offers helper classes for [batching](https://developers.google.com/api-client-library/java/google-api-java-client/batch), [media upload](https://developers.google.com/api-client-library/java/google-api-java-client/media-upload), and [media download](https://developers.google.com/api-client-library/java/google-api-java-client/media-download).
+   The library offers helper classes for [batching](https://developers.google.com/api-client-library/java/google-api-java-client/batch), [media upload](https://developers.google.com/api-client-library/java/google-api-java-client/media-upload), and [media download](https://developers.google.com/api-client-library/java/google-api-java-client/media-download).
 
 - **The library runs on Google App Engine.**
 
- [App Engine-specific helpers](https://developers.google.com/api-client-library/java/google-api-java-client/app-engine) make quick work of authenticated calls to APIs, and you do not need to worry about exchanging code for tokens. For example:
+    [App Engine-specific helpers](https://developers.google.com/api-client-library/java/google-api-java-client/app-engine) make quick work of authenticated calls to APIs, and you do not need to worry about exchanging code for tokens. For example:
 
-  ```java
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    AppIdentityCredential credential =
-        new AppIdentityCredential(Arrays.asList(UrlshortenerScopes.URLSHORTENER));
-    Urlshortener shortener =
-        new Urlshortener.Builder(new UrlFetchTransport(), new JacksonFactory(), credential)
-        .build();
-    UrlHistory history = shortener.URL().list().execute();
-    ...
-  } 
-  ```
+    ```java
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+      AppIdentityCredential credential =
+          new AppIdentityCredential(Arrays.asList(UrlshortenerScopes.URLSHORTENER));
+      Urlshortener shortener =
+          new Urlshortener.Builder(new UrlFetchTransport(), new JacksonFactory(), credential)
+          .build();
+      UrlHistory history = shortener.URL().list().execute();
+      ...
+    } 
+    ```
 
 - **The library runs on [Android (@Beta)](#@Beta).**
 
- If you are developing for Android and the Google API you want to use is included in the [Google Play Services library](https://developer.android.com/google/play-services/index.html), you should use that library for the best performance and experience. 
+    If you are developing for Android and the Google API you want to use is included in the [Google Play Services library](https://developer.android.com/google/play-services/index.html), you should use that library for the best performance and experience. 
+    
+    To access other Google APIs, you can use the Google Client Library for Java's Android-specific helper classes, which are are well-integrated with [Android AccountManager](http://developer.android.com/reference/android/accounts/AccountManager.html ). For example: 
 
- To access other Google APIs, you can use the Google Client Library for Java's Android-specific helper classes, which are are well-integrated with [Android AccountManager](http://developer.android.com/reference/android/accounts/AccountManager.html ). For example: 
-
-  ```java
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    // Google Accounts
-    credential =
-        GoogleAccountCredential.usingOAuth2(this, Collections.singleton(TasksScopes.TASKS));
-    SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
-    credential.setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
-    // Tasks client
-    service =
-        new com.google.api.services.tasks.Tasks.Builder(httpTransport, jsonFactory, credential)
-            .setApplicationName("Google-TasksAndroidSample/1.0").build();
-  } 
-  ```
+    ```java
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      // Google Accounts
+      credential =
+          GoogleAccountCredential.usingOAuth2(this, Collections.singleton(TasksScopes.TASKS));
+      SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
+      credential.setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
+      // Tasks client
+      service =
+          new com.google.api.services.tasks.Tasks.Builder(httpTransport, jsonFactory, credential)
+              .setApplicationName("Google-TasksAndroidSample/1.0").build();
+    } 
+    ```
 
 - **The library is easy to install.**
 
- The Google APIs Client Library for Java is easy to install, and you can download the binary directly from the [Downloads page](https://developers.google.com/api-client-library/java/google-api-java-client/download), or you can use Maven or Gradle.
+    The Google APIs Client Library for Java is easy to install, and you can download the binary directly from the [Downloads page](https://developers.google.com/api-client-library/java/google-api-java-client/download), or you can use Maven or Gradle.
  To use Maven, add the following lines to your pom.xml file:
-
+    
     ```maven
     <project>
       <dependencies>
         <dependency>
           <groupId>com.google.api-client</groupId>
           <artifactId>google-api-client</artifactId>
-          <version>1.20.0</version>
+          <version>1.23.0</version>
         </dependency>
       </dependencies>
     </project> 
     ``` 
 
- To use Gradle, add the following lines to your build.gradle file:
+   To use Gradle, add the following lines to your build.gradle file:
 
-  ```gradle
-  repositories {
-      mavenCentral()
-  }
-  dependencies {
-      compile 'com.google.api-client:google-api-client:1.20.0'
-  }
-  ```
+    ```gradle
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        compile 'com.google.api-client:google-api-client:1.23.0'
+    }
+    ```
 
 ## <a name='Dependencies'>Dependencies<a/>
 This library is built on top of two common libraries, also built by Google, and also designed to work with any HTTP service on the web: 
