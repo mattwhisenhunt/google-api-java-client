@@ -39,9 +39,7 @@ To find the generated library for a Google API, visit [Google APIs Client Librar
 If you are using the old GData library, you need to
 [migrate](https://github.com/google/gdata-java-client/blob/wiki/MigratingToGoogleApiJavaClient.md).
 
-### Developing for Android
 ### <a name='Developing_for_Android'>Developing for Android<a/>
-
 
 If you are developing for Android and the Google API you want to use is included in the [Google Play Services library](https://developer.android.com/google/play-services/index.html), you should use that library for the best performance and experience. 
 
